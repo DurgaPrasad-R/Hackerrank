@@ -1,0 +1,57 @@
+import java.io.*;
+import java.math.*;
+import java.security.*;
+import java.text.*;
+import java.util.*;
+import java.util.concurrent.*;
+import java.util.regex.*;
+
+class Result {
+
+    public static int sockMerchant(int n, List<Integer> ar) {
+        HashSet<Integer> set = new HashSet<>();
+        HashMap<Integer,Integer> hmap = new HashMap<>();
+        for(int i = 0;i<n;i++){
+            if(hmap.containsKey(ar.get(i))){
+                hmap.put(ar.get(i), hmap.get(ar.get(i))+1);
+            }
+            else{
+                hmap.put(ar.get(i), 1);
+                set.add(ar.get(i));
+            }
+        }
+        int res = 0;
+        for(int i: set){
+            if(set.contains(i)){
+                res+=hmap.get(i)/2;
+            }
+        }
+        return res;
+    }
+}
+
+public class Solution {
+    public static void main(String[] args) throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(System.getenv("OUTPUT_PATH")));
+
+        int n = Integer.parseInt(bufferedReader.readLine().trim());
+
+        String[] arTemp = bufferedReader.readLine().replaceAll("\\s+$", "").split(" ");
+
+        List<Integer> ar = new ArrayList<>();
+
+        for (int i = 0; i < n; i++) {
+            int arItem = Integer.parseInt(arTemp[i]);
+            ar.add(arItem);
+        }
+
+        int result = Result.sockMerchant(n, ar);
+
+        bufferedWriter.write(String.valueOf(result));
+        bufferedWriter.newLine();
+
+        bufferedReader.close();
+        bufferedWriter.close();
+    }
+}
