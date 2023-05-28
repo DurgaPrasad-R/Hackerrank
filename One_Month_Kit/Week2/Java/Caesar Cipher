@@ -1,0 +1,62 @@
+import java.io.*;
+import java.math.*;
+import java.security.*;
+import java.text.*;
+import java.util.*;
+import java.util.concurrent.*;
+import java.util.regex.*;
+
+class Result {
+    public static String caesarCipher(String s, int k) {
+        String res = "";
+        String t1 = "abcdefghijklmnopqrstuvwxyz";
+        String t2 = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        String p = t1;
+        String l = t2;
+        for(int i = 0;i<k;i++){
+            p = p.substring(p.length()-1, p.length())+p.substring(0, p.length()-1);
+            l = l.substring(l.length()-1, l.length())+l.substring(0, l.length()-1);
+        }
+        for(int i = 0;i<s.length();i++){
+            if(Character.isLetter(s.charAt(i))){
+                
+                for(int j = 0;j<l.length();j++){
+                    if(s.charAt(i) == l.charAt(j)){
+                        res+=t2.charAt(j);
+                    }
+                    else if(s.charAt(i) == p.charAt(j)){
+                        res+=t1.charAt(j);
+                    }
+                }
+            }
+            else{
+                res+=s.charAt(i);
+            }
+        }
+        return res;
+    }
+
+}
+
+public class Solution {
+    public static void main(String[] args) throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(System.getenv("OUTPUT_PATH")));
+
+        int n = Integer.parseInt(bufferedReader.readLine().trim());
+
+        String s = bufferedReader.readLine();
+
+        int k = Integer.parseInt(bufferedReader.readLine().trim());
+
+        String result = Result.caesarCipher(s, k);
+
+        bufferedWriter.write(result);
+        bufferedWriter.newLine();
+
+        bufferedReader.close();
+        bufferedWriter.close();
+    }
+}
+
+
